@@ -54,11 +54,12 @@ public final class ChinaRegionPickerViewController: UIViewController {
         let header = UIView()
         let titleLabel = UILabel()
         titleLabel.text = "请选择所在地址"
-        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         titleLabel.textAlignment = .center
 
         let closeButton = UIButton(type: .system)
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = UIColor(white: 0.13, alpha: 1)
         closeButton.accessibilityLabel = "关闭"
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 
@@ -121,7 +122,7 @@ public final class ChinaRegionPickerViewController: UIViewController {
     private func makeTabButton(level: RegionLevel) -> UIButton {
         let button = UIButton(type: .system)
         button.tag = level.rawValue
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(tabTapped(_:)), for: .touchUpInside)
         return button
     }
@@ -181,7 +182,7 @@ extension ChinaRegionPickerViewController: UITableViewDataSource, UITableViewDel
         let item = items[indexPath.row]
         let selected = model.selection[model.level]?.code == item.code
         cell.textLabel?.text = item.name
-        cell.textLabel?.font = .systemFont(ofSize: 14, weight: selected ? .medium : .regular)
+        cell.textLabel?.font = .systemFont(ofSize: 16, weight: selected ? .medium : .regular)
         cell.imageView?.image = selected ? Self.selectedIcon : nil
         cell.accessoryType = .none
         return cell

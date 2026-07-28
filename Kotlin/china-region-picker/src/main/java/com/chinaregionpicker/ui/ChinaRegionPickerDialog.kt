@@ -2,6 +2,7 @@ package com.chinaregionpicker.ui
 
 import android.app.Dialog
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
@@ -85,12 +86,13 @@ class ChinaRegionPickerDialog(
         }
         header.addView(TextView(context).apply {
             text = "请选择所在地址"
-            textSize = 16f
+            textSize = 18f
             gravity = Gravity.CENTER
             setTypeface(typeface, Typeface.BOLD)
         }, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         header.addView(ImageButton(context).apply {
             setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
+            imageTintList = ColorStateList.valueOf(ColorState.TEXT)
             contentDescription = "关闭"
             setBackgroundColor(Color.TRANSPARENT)
             setOnClickListener { dismiss() }
@@ -109,6 +111,7 @@ class ChinaRegionPickerDialog(
 
         emptyTextView = TextView(context).apply {
             text = "加载中..."
+            textSize = 16f
             gravity = Gravity.CENTER
         }
         content.addView(
@@ -142,7 +145,7 @@ class ChinaRegionPickerDialog(
             if (title.isNotEmpty()) {
                 tabContainer.addView(TextView(context).apply {
                     text = title
-                    textSize = 14f
+                    textSize = 16f
                     gravity = Gravity.CENTER
                     setTextColor(if (model.level == level) ColorState.RED else ColorState.TEXT)
                     setTypeface(typeface, Typeface.BOLD)
@@ -211,7 +214,7 @@ class ChinaRegionPickerDialog(
             val item = getItem(position)
             val selected = item.code == selectedCode
             return (convertView as? TextView ?: TextView(context).apply {
-                textSize = 14f
+                textSize = 16f
                 gravity = Gravity.CENTER_VERTICAL
                 setPadding(dp(20), 0, dp(20), 0)
                 layoutParams = AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(48))
