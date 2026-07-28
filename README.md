@@ -15,7 +15,13 @@
 
 ## Swift
 
-将 `Swift` 目录作为本地 Swift Package 添加到 Xcode，然后：
+在 Xcode 中选择 **File > Add Package Dependencies**，输入：
+
+```text
+https://github.com/duanbhu/ChinaRegionPicker.git
+```
+
+依赖规则选择 **Up to Next Major Version**，最低版本填写 `0.1.0`。选择 `ChinaRegionPicker` 产品并添加到 App Target，然后：
 
 ```swift
 import ChinaRegionPicker
@@ -87,9 +93,8 @@ ChinaRegionPickerDialog(this, store) { selection ->
 ## 验证
 
 ```bash
-cd Swift
 swift test
 
-cd ../Kotlin
+cd Kotlin
 ./gradlew :china-region-picker:testDebugUnitTest
 ```

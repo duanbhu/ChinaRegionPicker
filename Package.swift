@@ -14,6 +14,7 @@ let package = Package(
     targets: [
         .systemLibrary(
             name: "CSQLite",
+            path: "Swift/Sources/CSQLite",
             pkgConfig: "sqlite3",
             providers: [
                 .apt(["libsqlite3-dev"]),
@@ -23,12 +24,14 @@ let package = Package(
         .target(
             name: "ChinaRegionPicker",
             dependencies: ["CSQLite"],
+            path: "Swift/Sources/ChinaRegionPicker",
             resources: [.copy("Resources")],
             linkerSettings: [.linkedLibrary("sqlite3")]
         ),
         .testTarget(
             name: "ChinaRegionPickerTests",
-            dependencies: ["ChinaRegionPicker"]
+            dependencies: ["ChinaRegionPicker"],
+            path: "Swift/Tests/ChinaRegionPickerTests"
         )
     ]
 )
