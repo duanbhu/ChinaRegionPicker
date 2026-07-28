@@ -1,0 +1,8 @@
+.DS_Store
+.build/
+.swiftpm/
+**/.gradle/
+**/build/
+xcuserdata/
+*.xcuserstate
+local.properties
