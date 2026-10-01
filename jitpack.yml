@@ -1,0 +1,5 @@
+jdk:
+  - openjdk17
+
+install:
+  - cd Kotlin && ./gradlew :china-region-picker:publishReleasePublicationToMavenLocal

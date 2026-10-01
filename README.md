@@ -57,6 +57,30 @@ ChinaRegionPickerViewController.present(
 
 ## Kotlin
 
+### GitHub/JitPack 依赖
+
+仓库已配置 Maven 发布插件，可通过 JitPack 按 Git tag 或 commit 引入。先在 `settings.gradle.kts` 添加：
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+```
+
+再在 App 模块的 `build.gradle.kts` 添加：
+
+```kotlin
+dependencies {
+    implementation("com.github.duanbhu.ChinaRegionPicker:china-region-picker:0.1.0")
+}
+```
+
+其中 `0.1.0` 对应 GitHub 上的 tag；也可以使用 `main-SNAPSHOT` 跟踪主分支。
+
 将 `Kotlin/china-region-picker` 模块引入 Android 工程，然后：
 
 ```kotlin
