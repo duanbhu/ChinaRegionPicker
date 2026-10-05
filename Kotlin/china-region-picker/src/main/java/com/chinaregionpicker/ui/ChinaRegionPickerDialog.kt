@@ -114,16 +114,10 @@ class ChinaRegionPickerDialog(
             textSize = 16f
             gravity = Gravity.CENTER
         }
-        content.addView(
-            emptyTextView,
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
-        )
-
         adapter = RegionAdapter()
         listView = ListView(context).apply {
             dividerHeight = 0
             this.adapter = this@ChinaRegionPickerDialog.adapter
-            this.emptyView = emptyTextView
             setOnItemClickListener { _, _, position, _ ->
                 val result = model.select(this@ChinaRegionPickerDialog.adapter.getItem(position))
                 if (result != null) {
@@ -134,7 +128,19 @@ class ChinaRegionPickerDialog(
                 }
             }
         }
-        content.addView(listView, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
+        val listContainer = FrameLayout(context)
+        listContainer.addView(
+            listView,
+            FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT),
+        )
+        listContainer.addView(
+            emptyTextView,
+            FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT),
+        )
+        content.addView(
+            listContainer,
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f),
+        )
         return content
     }
 
@@ -162,14 +168,20 @@ class ChinaRegionPickerDialog(
     private fun reload() {
         updateTabs()
         emptyTextView.text = "加载中..."
+        emptyTextView.visibility = View.VISIBLE
         adapter.submit(emptyList(), null)
         val version = requestVersion.incrementAndGet()
         executor.execute {
             runCatching { model.items() }
                 .onSuccess { regions ->
                     mainHandler.post {
-                        if (version == requestVersion.get() && isShowing) {
-                            emptyTextView.text = "暂无数据"
+                        if (version == requestVersion.get()) {
+                            if (regions.isEmpty()) {
+                                emptyTextView.text = "暂无数据"
+                                emptyTextView.visibility = View.VISIBLE
+                            } else {
+                                emptyTextView.visibility = View.GONE
+                            }
                             adapter.submit(regions, model.selection[model.level]?.code)
                             scrollToSelected(regions)
                         }
@@ -177,8 +189,9 @@ class ChinaRegionPickerDialog(
                 }
                 .onFailure { error ->
                     mainHandler.post {
-                        if (version == requestVersion.get() && isShowing) {
+                        if (version == requestVersion.get()) {
                             emptyTextView.text = "加载失败"
+                            emptyTextView.visibility = View.VISIBLE
                             Toast.makeText(context, error.message ?: "行政区划加载失败", Toast.LENGTH_SHORT).show()
                         }
                     }
