@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ChinaRegionPicker"
 include(":china-region-picker")
+include(":demo")
